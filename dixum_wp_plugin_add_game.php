@@ -96,7 +96,7 @@ function wp_add_game_page(){
 	<div class="wrap">
 		<form action="admin.php?page=addgame" method="POST" enctype="multipart/form-data">
 			<h1>Add game</h1>
-			<h2><?php echo ob_get_clean(); echo $status; ob_start();?></h2>
+			<h2><?php echo $status; ?></h2>
 			<input required type="text" placeholder="Game name" name="game_name" maxlength="50"/><br/>
 			<input required type="file" name="game_picture" id="game_picture"/><br/>
 			<input type="hidden" name="post_id" id="post_id" value="55" />
@@ -110,7 +110,7 @@ function wp_add_game_page(){
 	
 	<?php
 	
-	echo ob_get_clean();
+	ob_get_clean();
 }
 
 function wp_add_game_tab(){
@@ -147,35 +147,32 @@ function shortcode_add_game($atts){
 	$game_name = $post_arr['post_title'];
 	$description = nl2br($post_arr['post_content']);
 	
-	ob_start();?>
-
-	<div class = "thumbnail">
-		<img class = "portfolio_img" src="<?php echo site_url().$dir; ?>" alt = "Placeholder for game image"/>
-		<div class = "caption">
-            <h3><?php echo $game_name; ?></h3>
-			<p>
-				<?php echo $description; ?>
-			</p>
-			<div class = "portfolio_footer">
-				<div class = "row">
-					<div class = "col-sm-6">
-						<a href="<?php echo $link_ios;?>"><img src="<?php echo get_template_directory_uri() ."/"; ?>img/game/stores/astore.png"/ alt = "Appstore link"></a>
-					</div>
-					<div class = "col-sm-6">
-						<a href="<?php echo $link_android;?>"><img src="<?php echo get_template_directory_uri() ."/"; ?>img/game/stores/gplay.png"/ alt = "Google Play link"></a>
+	ob_start();
+	$output_string="
+		<div class = 'thumbnail'>
+			<img class = 'portfolio_img' src=' ".site_url().$dir ."' alt = 'Placeholder for game image'/>
+			<div class = 'caption'>
+				<h3>".$game_name ."</h3>
+				<p>
+					".$description ."
+				</p>
+				<div class = 'portfolio_footer'>
+					<div class = 'row'>
+						<div class = 'col-sm-6'>
+							<a href='".$link_ios."'><img src='".get_template_directory_uri() ."/"."img/game/stores/astore.png'/ alt = 'Appstore link'></a>
+						</div>
+						<div class = 'col-sm-6'>
+							<a href='".$link_android."'><img src='".get_template_directory_uri() ."/"."img/game/stores/gplay.png'/ alt = 'Google Play link'></a>
+						</div>
 					</div>
 				</div>
+				<a href='#' class = 'btn btn-primary site_link'>Classified Site</a>
 			</div>
-			<a href="#" class = "btn btn-primary site_link">Classified Site</a>
 		</div>
-	</div>
+	";
 	
-	
-	<?php
-	
-	echo ob_get_clean();
-	
-	
+	ob_get_clean();
+	return ($output_string);
 }
 function game_init() {
 	$labels = array(
