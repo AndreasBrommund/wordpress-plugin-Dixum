@@ -96,7 +96,7 @@ function wp_add_game_page(){
 	<div class="wrap">
 		<form action="admin.php?page=addgame" method="POST" enctype="multipart/form-data">
 			<h1>Add game</h1>
-			<h2><?php echo $status; ?></h2>
+			<h2><?php echo ob_get_clean(); echo $status; ob_start();?></h2>
 			<input required type="text" placeholder="Game name" name="game_name" maxlength="50"/><br/>
 			<input required type="file" name="game_picture" id="game_picture"/><br/>
 			<input type="hidden" name="post_id" id="post_id" value="55" />
@@ -110,7 +110,7 @@ function wp_add_game_page(){
 	
 	<?php
 	
-	ob_get_clean();
+	echo ob_get_clean();
 }
 
 function wp_add_game_tab(){
@@ -173,6 +173,8 @@ function shortcode_add_game($atts){
 	
 	ob_get_clean();
 	return ($output_string);
+	
+	
 }
 function game_init() {
 	$labels = array(
