@@ -148,26 +148,29 @@ function shortcode_add_game($atts){
 	$description = nl2br($post_arr['post_content']);
 	
 	ob_start();?>
+
 	<div class = "thumbnail">
-		<img class = "portfolio_img" src="<?php echo site_url().$dir; ?> "alt = "Placeholder for game image"/>
+		<img class = "portfolio_img" src="<?php echo site_url().$dir; ?>" alt = "Placeholder for game image"/>
 		<div class = "caption">
- 			<h3><?php echo $game_name; ?></h3>
-				<p>
- 					<?php echo $description; ?>
-				</p>
-				<div class = "portfolio_footer">
- 					<div class = "row">
- 						<div class = "col-sm-6">
- 							<a href="<?php echo $link_ios; ?>"><img src="<?php echo get_template_directory_uri() ."/"; ?>img/astore.png"/ alt = "Appstore link"></a>
- 						</div>
- 						<div class = "col-sm-6">
- 							<a href="<?php echo $link_android; ?>"><img src="<?php echo get_template_directory_uri() ."/"; ?>img/gplay.png"/ alt = "Google Play link"></a>
- 						</div>
+            <h3><?php echo $game_name; ?></h3>
+			<p>
+				<?php echo $description; ?>
+			</p>
+			<div class = "portfolio_footer">
+				<div class = "row">
+					<div class = "col-sm-6">
+						<a href="<?php echo $link_ios;?>"><img src="<?php echo get_template_directory_uri() ."/"; ?>img/game/stores/astore.png"/ alt = "Appstore link"></a>
+					</div>
+					<div class = "col-sm-6">
+						<a href="<?php echo $link_android;?>"><img src="<?php echo get_template_directory_uri() ."/"; ?>img/game/stores/gplay.png"/ alt = "Google Play link"></a>
 					</div>
 				</div>
-				<a href="#" class = "btn btn-primary site_link">Classified Site</a>
- 		</div>
+			</div>
+			<a href="#" class = "btn btn-primary site_link">Classified Site</a>
+		</div>
 	</div>
+	
+	
 	<?php
 	
 	echo ob_get_clean();
