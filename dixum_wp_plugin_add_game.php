@@ -37,7 +37,7 @@ function game_init() {
 		'has_archive'        => true,
 		'hierarchical'       => false,
 		'menu_position'      => null,
-		'supports'           => array( 'title','custom-fields')
+		'supports'           => array( 'title','custom-fields','editor')
 	);
 
 	register_post_type( 'game', $args );
@@ -85,6 +85,7 @@ function wp_add_game_page(){
 					$attachment_id = media_handle_upload( 'game_picture', $_POST['post_id'] );
 					
 					$new_post = array(
+								'post_content' 	=> $game_description,
 								'post_title'	=> $game_name,
 								'post_name'		=> $game_name,
 								'post_status'   => 'publish',
@@ -95,7 +96,6 @@ function wp_add_game_page(){
 					
 					add_post_meta($post,'Iso',$game_link_ios,true);
 					add_post_meta($post,'Android',$game_link_android,true);
-					add_post_meta($post,'Game description',$game_description,true);
 					add_post_meta($post,'Pic id',$attachment_id ,true);
 					add_post_meta($post,'Game website',$game_website,true);
 					$status ="Send";
@@ -136,11 +136,20 @@ function shortcode_add_game($atts){
 
 	$id = $atts['id'];
 	
-	$post_arr = get_post($post_id,ARRAY_A);
-	$post_metdata = get_metadata('post',$id);
 	
-	$game_name = $post_arr['post_title'];
-	$description = nl2br($post_metdata['Game description'][0]);
+	
+	$post_arr = query_posts('p='.$id.'&post_type=game')[0];
+	$post_metdata = get_metadata('post',$id);
+
+	foreach ($post_arr as $key => $post){
+		if($key == 'post_title'){
+			$game_name = $post;
+		}
+		if($key == 'post_content'){
+			$description = nl2br($post);
+		}
+	}
+	
 	$link_android = $post_metdata['Android'][0];
 	$link_ios = $post_metdata['Iso'][0];
 	$pic_id= $post_metdata['Pic id'][0];
@@ -157,8 +166,6 @@ function shortcode_add_game($atts){
 				<h3>".$game_name ."</h3>
 				<p>
 					".$description ."
-					<br/>
-					<a href=".$game_website.">".$game_website."<a/>
 				</p>
 				<div class = 'portfolio_footer'>
 					<div class = 'row'>
@@ -170,7 +177,7 @@ function shortcode_add_game($atts){
 						</div>
 					</div>
 				</div>
-				<a href='#' class = 'btn btn-primary site_link'>Classified Site</a>
+				<a href='".$game_website."' class = 'btn btn-primary site_link'>More facts about ".$game_name."</a>
 			</div>
 		</div>
 	";
