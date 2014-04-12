@@ -144,7 +144,7 @@ function shortcode_add_game($atts){
 	$link_android = $post_metdata['Android'][0];
 	$link_ios = $post_metdata['Iso'][0];
 	$pic_id= $post_metdata['Pic id'][0];
-	$game_website= $post_metdata['Game_website'][0];
+	$game_website = $post_metdata['Game website'][0];
 	
 	$attachment_url = wp_get_attachment_url($pic_id);
 	$dir = substr($attachment_url,strpos($attachment_url,'/wp-content'),strlen($attachment_url));
@@ -158,7 +158,7 @@ function shortcode_add_game($atts){
 				<p>
 					".$description ."
 					<br/>
-					".$game_website."
+					<a href=".$game_website.">".$game_website."<a/>
 				</p>
 				<div class = 'portfolio_footer'>
 					<div class = 'row'>
