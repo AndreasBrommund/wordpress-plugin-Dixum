@@ -4,7 +4,7 @@
  * Plugin Name: Add game
  * Author: Dixum
  * Author URI: www.dixum.se
- *Description: You need to make 4 custom fields, Pic id, ios, android, and description. Short code: [add_game id="index"] index = id of the post 
+ * Description:[add_game id="index"] index = id of the post 
  *
  */
 function game_init() {
