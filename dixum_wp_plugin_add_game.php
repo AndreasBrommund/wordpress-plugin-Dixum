@@ -66,6 +66,12 @@ function wp_add_game_page(){
 		$game_link_android = $_POST['game_link_android'];
 		$game_link_ios = $_POST['game_link_ios'];
 		$game_website = $_POST['game_website'];
+		$game_check_link = $_POST['android_and_ios_links'];
+		
+		if($game_check_link == 'no'){
+			$game_link_ios = "";
+			$game_link_android = "";
+		}
 		
 		if(strrpos($game_link_android, 'http://') === false){
 			$game_link_android = 'http://'.$game_link_android;
@@ -95,6 +101,7 @@ function wp_add_game_page(){
 					$post = wp_insert_post($new_post); 
 					
 					add_post_meta($post,'Iso',$game_link_ios,true);
+					add_post_meta($post,'Android and iOS links',$game_check_link,true);
 					add_post_meta($post,'Android',$game_link_android,true);
 					add_post_meta($post,'Pic id',$attachment_id ,true);
 					add_post_meta($post,'Game website',$game_website,true);
@@ -118,6 +125,9 @@ function wp_add_game_page(){
 			<input required type="text" placeholder="Game name" name="game_name" maxlength="50"/><br/>
 			<input required type="file" name="game_picture" id="game_picture"/><br/>
 			<input type="hidden" name="post_id" id="post_id" value="55" />
+			<h4>Android and IOS links</h4>
+			<input type="radio" name="android_and_ios_links" value="yes" checked>Yes
+			<input type="radio" name="android_and_ios_links" value="no">No<br/>
 			<input required type="text" placeholder="Android link" name="game_link_android" maxlength="100"/><br/>
 			<input required type="text" placeholder="IOS link" name="game_link_ios" maxlength="100"/><br/>
 			<input required type="text" placeholder="Game website" name="game_website"maxlength="100"/><br/>
@@ -152,6 +162,7 @@ function shortcode_add_game($atts){
 	
 	$link_android = $post_metdata['Android'][0];
 	$link_ios = $post_metdata['Iso'][0];
+	$android_iOS_links = $post_metdata['Android and iOS links'][0];
 	$pic_id= $post_metdata['Pic id'][0];
 	$game_website = $post_metdata['Game website'][0];
 	
@@ -167,17 +178,21 @@ function shortcode_add_game($atts){
 				<p>
 					".$description ."
 				</p>
-				<div class = 'portfolio_footer'>
-					<div class = 'row'>
-						<div class = 'col-sm-6'>
-							<a href='".$link_ios."'><img src='".get_template_directory_uri() ."/"."img/game/stores/astore.png'/ alt = 'Appstore link'></a>
-						</div>
-						<div class = 'col-sm-6'>
-							<a href='".$link_android."'><img src='".get_template_directory_uri() ."/"."img/game/stores/gplay.png'/ alt = 'Google Play link'></a>
+				";
+				if($android_iOS_links=='yes'){
+					$output_string .="<div class = 'portfolio_footer'>
+						<div class = 'row'>
+							<div class = 'col-sm-6'>
+								<a href='".$link_ios."'><img src='".get_template_directory_uri() ."/"."img/game/stores/astore.png'/ alt = 'Appstore link'></a>
+							</div>
+							<div class = 'col-sm-6'>
+								<a href='".$link_android."'><img src='".get_template_directory_uri() ."/"."img/game/stores/gplay.png'/ alt = 'Google Play link'></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<a href='".$game_website."' class = 'btn btn-primary site_link'>More facts about ".$game_name."</a>
+					";
+				}
+				$output_string .="<a href='".$game_website."' class = 'btn btn-primary site_link'>More facts about ".$game_name."</a>
 			</div>
 		</div>
 	";
