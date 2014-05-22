@@ -4,6 +4,7 @@
  * Plugin Name: Add game
  * Author: Dixum
  * Author URI: www.dixum.se
+ * Version: 1.0.0
  * Description:[add_game id="index"] index = id of the post 
  *
  */
@@ -190,10 +191,10 @@ function shortcode_add_game($atts){
 							</div>
 						</div>
 					</div>
-					";
+					<a href='".$game_website."' class = 'btn btn-primary site_link'>More facts about ".$game_name."</a>";
 				}
-				$output_string .="<a href='".$game_website."' class = 'btn btn-primary site_link'>More facts about ".$game_name."</a>
-			</div>
+				
+			$output_string .=" </div> 
 		</div>
 	";
 	
