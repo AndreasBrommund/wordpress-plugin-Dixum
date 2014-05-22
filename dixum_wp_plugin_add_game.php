@@ -119,6 +119,36 @@ function wp_add_game_page(){
 	}
 
 	ob_start();?>
+	
+	
+	<script type="text/javascript">
+		function radio_buttons(){
+			var radio_yes = document.getElementById('android_and_ios_links_yes');
+			var radio_no = document.getElementById('android_and_ios_links_no');
+			var android_link = document.getElementById('android_link');
+			var link_ios = document.getElementById('link_ios');
+			var game_website = document.getElementById('game_website');
+			
+			var div_br = document.getElementsByClassName('br');
+			
+			if(radio_yes.checked) {
+				android_link.setAttribute("type","text");
+				link_ios.setAttribute("type","text");
+				game_website.setAttribute("type","text");
+				for (var i = 0; i < div_br.length; i++) { 
+					div_br[i].appendChild(document.createElement("br"));
+				}
+			}else if(radio_no.checked) {
+				android_link.setAttribute("type","hidden");
+				link_ios.setAttribute("type","hidden");
+				game_website.setAttribute("type","hidden");
+				for (var i = 0; i < div_br.length; i++) { 
+					div_br[i].removeChild(div_br[i].childNodes[0]);
+				}
+			}
+		}
+	</script>
+	
 	<div class="wrap">
 		<form action="admin.php?page=addgame" method="POST" enctype="multipart/form-data">
 			<h1>Add game</h1>
@@ -127,15 +157,16 @@ function wp_add_game_page(){
 			<input required type="file" name="game_picture" id="game_picture"/><br/>
 			<input type="hidden" name="post_id" id="post_id" value="55" />
 			<h4>Android and IOS links</h4>
-			<input type="radio" name="android_and_ios_links" value="yes" checked>Yes
-			<input type="radio" name="android_and_ios_links" value="no">No<br/>
-			<input required type="text" placeholder="Android link" name="game_link_android" maxlength="100"/><br/>
-			<input required type="text" placeholder="IOS link" name="game_link_ios" maxlength="100"/><br/>
-			<input required type="text" placeholder="Game website" name="game_website"maxlength="100"/><br/>
+			<input type="radio" name="android_and_ios_links" id="android_and_ios_links_yes" value="yes" onclick="radio_buttons()" checked>Yes
+			<input type="radio" name="android_and_ios_links" id="android_and_ios_links_no" value="no" onclick="radio_buttons()">No<br/>
+			<input required type="text" placeholder="Android link" name="game_link_android" maxlength="100" id="android_link"/><span class="br"><br/></span>
+			<input required type="text" placeholder="IOS link" name="game_link_ios" maxlength="100" id="link_ios"/><span class="br"><br/></span>
+			<input required type="text" placeholder="Game website" name="game_website"maxlength="100" id="game_website"/><span class="br"><br/></span>
 			<textarea required name="game_description" placeholder="Description" maxlength="400"></textarea><br/>
 			<input type="submit" name="post_game" value="Post game"/> 
 		</form>
 	</div>
+	
 	
 	
 	<?php
